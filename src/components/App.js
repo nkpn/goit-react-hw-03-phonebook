@@ -1,7 +1,10 @@
+//* Service
 import React, { Component } from 'react';
 import notify from 'helpers/Toast';
 import { ToastContainer } from 'react-toastify';
 import '../index.css';
+import { saveToLS } from 'helpers/localStorage';
+import { getFromLS } from 'helpers/localStorage';
 //* Components
 import Container from './Container';
 import SubmitForm from './SubmitForm';
@@ -22,6 +25,19 @@ class App extends Component {
     contacts: [...this.props.contacts],
     filter: '',
   };
+
+  componentDidMount() {
+    // const contacts = localStorage.getItem('contacts');
+    // const parsedContacts = JSON.parse(contacts);
+    this.setState({ contacts: getFromLS('contacts') });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      saveToLS('contacts', this.state.contacts);
+      // localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
 
   AddContactOnSubmit = data => {
     const contact = {
@@ -64,6 +80,7 @@ class App extends Component {
   };
 
   render() {
+    console.log('App render');
     const { filter } = this.state;
     const { deleteContact, onFilter, AddContactOnSubmit } = this;
     const visibleContacts = this.getVisibleContacts();
