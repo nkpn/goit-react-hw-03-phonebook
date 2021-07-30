@@ -88,7 +88,7 @@ class App extends Component {
     return (
       <Container>
         <h1>Phonebook</h1>
-        <SubmitForm submittedProps={AddContactOnSubmit} />
+        <SubmitForm onSubmit={AddContactOnSubmit} />
         <h1>Contacts</h1>
         <Filter value={filter} onChange={onFilter} />
         <ContactList contacts={visibleContacts} deleteContact={deleteContact} />

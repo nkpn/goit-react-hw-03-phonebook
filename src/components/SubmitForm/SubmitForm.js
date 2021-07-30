@@ -17,7 +17,7 @@ class SubmitForm extends Component {
     event.preventDefault();
 
     //* Передаем в пропс чтоб прочитать в App
-    this.props.submittedProps({
+    this.props.onSubmit({
       name: event.currentTarget.name.value,
       number: event.currentTarget.number.value,
       id: shortid(),
