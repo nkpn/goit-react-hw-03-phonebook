@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import s from './SubmitForm.module.css';
 import shortid from 'shortid';
-import PropTypes from 'prop-types';
 
 class SubmitForm extends Component {
   state = { name: '', number: '', id: '' };
