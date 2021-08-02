@@ -81,7 +81,7 @@ class App extends Component {
 
   render() {
     console.log('App render');
-    const { filter } = this.state;
+    const { filter, contacts } = this.state;
     const { deleteContact, onFilter, AddContactOnSubmit } = this;
     const visibleContacts = this.getVisibleContacts();
 
@@ -90,7 +90,8 @@ class App extends Component {
         <h1>Phonebook</h1>
         <SubmitForm onSubmit={AddContactOnSubmit} />
         <h1>Contacts</h1>
-        <Filter value={filter} onChange={onFilter} />
+        {contacts.length >= 2 && <Filter value={filter} onChange={onFilter} />}
+
         <ContactList contacts={visibleContacts} deleteContact={deleteContact} />
         <ToastContainer />
       </Container>
