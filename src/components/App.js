@@ -26,19 +26,6 @@ class App extends Component {
     filter: '',
   };
 
-  componentDidMount() {
-    // const contacts = localStorage.getItem('contacts');
-    // const parsedContacts = JSON.parse(contacts);
-    this.setState({ contacts: getFromLS('contacts') });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.contacts !== prevState.contacts) {
-      saveToLS('contacts', this.state.contacts);
-      // localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
-  }
-
   AddContactOnSubmit = data => {
     const contact = {
       name: data.name,
@@ -60,27 +47,40 @@ class App extends Component {
     }));
   };
 
-  onFilter = event => {
-    this.setState({ filter: event.currentTarget.value });
-  };
-
-  getVisibleContacts = () => {
-    const { filter, contacts } = this.state;
-
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter),
-    );
-  };
-
   deleteContact = data => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== data),
     }));
   };
 
+  onFilter = event => {
+    this.setState({ filter: event.currentTarget.value });
+  };
+
+  getVisibleContacts = () => {
+    const { filter, contacts } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+
+    return contacts.filter(({ name }) =>
+      name.toLowerCase().includes(normalizedFilter),
+    );
+  };
+
+  componentDidMount() {
+    // const contacts = localStorage.getItem('contacts');
+    // const parsedContacts = JSON.parse(contacts);
+    this.setState({ contacts: getFromLS('contacts') });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      saveToLS('contacts', this.state.contacts);
+      // localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   render() {
-    const { filter } = this.state;
+    const { filter, contacts } = this.state;
     const { deleteContact, onFilter, AddContactOnSubmit } = this;
     const visibleContacts = this.getVisibleContacts();
 
@@ -89,7 +89,7 @@ class App extends Component {
         <h1>Phonebook</h1>
         <SubmitForm onSubmit={AddContactOnSubmit} />
         <h1>Contacts</h1>
-        <Filter value={filter} onChange={onFilter} />
+        {contacts.length >= 2 && <Filter value={filter} onChange={onFilter} />}
         <ContactList contacts={visibleContacts} deleteContact={deleteContact} />
         <ToastContainer />
       </Container>
