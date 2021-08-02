@@ -81,7 +81,10 @@ class App extends Component {
         <SubmitForm onSubmit={AddContactOnSubmit} />
         <h1>Contacts</h1>
         {contacts.length >= 2 && <Filter value={filter} onChange={onFilter} />}
-        <ContactList contacts={visibleContacts} deleteContact={deleteContact} />
+        <ContactList
+          contacts={this.getVisibleContacts()}
+          deleteContact={deleteContact}
+        />
         <ToastContainer />
       </Container>
     );
