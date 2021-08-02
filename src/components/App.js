@@ -73,7 +73,6 @@ class App extends Component {
   render() {
     const { filter, contacts } = this.state;
     const { deleteContact, onFilter, AddContactOnSubmit } = this;
-    const visibleContacts = this.getVisibleContacts();
 
     return (
       <Container>
