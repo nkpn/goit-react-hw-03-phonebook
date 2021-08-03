@@ -18,11 +18,11 @@ class App extends Component {
   };
 
   AddContactOnSubmit = data => {
-    const contact = {
-      name: data.name,
-      number: data.number,
-      id: data.id,
-    };
+    // const contact = {
+    //   name: data.name,
+    //   number: data.number,
+    //   id: data.id,
+    // };
 
     if (
       this.state.contacts.find(
@@ -33,9 +33,13 @@ class App extends Component {
       return;
     }
 
-    this.setState(preventState => ({
-      contacts: [contact, ...preventState.contacts],
-    }));
+    // this.setState(preventState => ({
+    //   contacts: [contact, ...preventState.contacts],
+    // }));
+
+    this.setState(prevState => {
+      return { contacts: [...prevState.contacts, data] };
+    });
   };
 
   deleteContact = data => {
@@ -58,9 +62,12 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // const contacts = localStorage.getItem('contacts');
-    // const parsedContacts = JSON.parse(contacts);
-    this.setState({ contacts: getFromLS('contacts') });
+    // this.setState({ contacts: getFromLS('contacts') });
+    const contacts = localStorage.getItem('contacts');
+    const contactsPars = JSON.parse(contacts);
+    if (contactsPars) {
+      this.setState({ contacts: contactsPars });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -79,7 +86,7 @@ class App extends Component {
         <h1>Phonebook</h1>
         <SubmitForm onSubmit={AddContactOnSubmit} />
         <h1>Contacts</h1>
-        {contacts.length >= 2 && <Filter value={filter} onChange={onFilter} />}
+        <Filter value={filter} onChange={onFilter} />
         <ContactList
           contacts={this.getVisibleContacts()}
           deleteContact={deleteContact}
