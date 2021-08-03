@@ -7,8 +7,8 @@ class SubmitForm extends Component {
 
   uniqeID = shortid();
 
-  handleInputChange = ({ target }) => {
-    const { name, value, id } = target;
+  handleInputChange = event => {
+    const { name, value, id } = event.currentTarget;
     this.setState({ [name]: value, id: id });
   };
 
@@ -16,13 +16,8 @@ class SubmitForm extends Component {
     event.preventDefault();
 
     //* Передаем в пропс чтоб прочитать в App
-    this.props.onSubmit({
-      name: event.currentTarget.name.value,
-      number: event.currentTarget.number.value,
-      id: shortid(),
-    });
+    this.props.onSubmit(this.state);
 
-    console.log(this.props);
     this.reset();
   };
 

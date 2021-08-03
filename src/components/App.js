@@ -44,8 +44,8 @@ class App extends Component {
     }));
   };
 
-  onFilter = event => {
-    this.setState({ filter: event.currentTarget.value });
+  onFilter = filter => {
+    this.setState({ filter });
   };
 
   getVisibleContacts = () => {

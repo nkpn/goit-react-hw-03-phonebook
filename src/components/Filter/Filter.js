@@ -9,7 +9,8 @@ const Filter = ({ value, onChange }) => {
       <input
         type="text"
         value={value}
-        onChange={onChange}
+        // onChange={onChange}
+        onChange={({ target: { value } }) => onChange(value)}
         className={style.Input}
       ></input>
     </label>
